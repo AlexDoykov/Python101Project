@@ -1,12 +1,12 @@
-from varify import *
+from verify import *
 
 
 class Character:
     def __init__(self, health, mana):
-        varify_int(health)
-        varify_int(mana)
-        varify_positive(health)
-        varify_positive(mana)
+        verify_int(health)
+        verify_int(mana)
+        verify_positive(health)
+        verify_positive(mana)
         self.health = health
         self.mana = mana
         self.max_health = health
@@ -25,8 +25,8 @@ class Character:
         return self.mana
 
     def take_healing(self, healing_points):
-        varify_int(healing_points)
-        varify_positive(healing_points)
+        verify_int(healing_points)
+        verify_positive(healing_points)
         if not self.is_alive():
             return False
         self.health = min(
@@ -35,8 +35,8 @@ class Character:
         return True
 
     def take_mana(self, mana_points):
-        varify_int(mana_points)
-        varify_positive(mana_points)
+        verify_int(mana_points)
+        verify_positive(mana_points)
         if not self.is_alive():
             return False
         self.mana = min(

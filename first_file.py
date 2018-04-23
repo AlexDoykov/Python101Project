@@ -1,2 +1,0 @@
-def zaiche():
-    print("Zaiche ^^")
