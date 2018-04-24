@@ -32,6 +32,10 @@ class TestCharacterClass(unittest.TestCase):
     def test_take_mana_alive_character(self):
         self.assertTrue(self.alive_character.take_mana(mana_points=7))
 
+    def test_take_damage_0(self):
+        self.alive_character.take_damage(120)
+        self.assertEqual(self.character.health, 0)
+
     def test_type_error(self):
         with self.assertRaises(TypeError):
             self.alive_character.take_healing(healing_points='a')

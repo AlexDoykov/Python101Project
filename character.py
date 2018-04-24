@@ -43,3 +43,8 @@ class Character:
             self.mana + mana_points,
             self.max_mana)
         return True
+
+    def take_damage(self, damage_points):
+        verify_number(damage_points)
+        verify_positive(damage_points)
+        self.health = max(self.health - damage_points, 0)
