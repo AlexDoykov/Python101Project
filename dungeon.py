@@ -93,19 +93,3 @@ class Dungeon:
                     self.__hero_x,
                     self.__hero_y
                 )
-
-
-def main():
-    dungeon = Dungeon("level1.txt")
-    dungeon.spawn("dddd")
-    dungeon.print_map()
-    dungeon.moveHero("right")
-    dungeon.print_map()
-    dungeon.moveHero("up")
-    dungeon.print_map()
-    dungeon.moveHero("right")
-    dungeon.print_map()
-
-
-if __name__ == '__main__':
-    main()
