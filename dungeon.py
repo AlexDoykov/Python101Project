@@ -14,17 +14,22 @@ class Dungeon:
         with open(file_name) as file:
             return file.readlines()
 
+    def fill_treasures_list(self):
+        pass
+
     def __fill_map(self):
         map_string = self.read_file(self.file_name)
-        self.treasures = self.read_file("treasures_" + self.file_name)
+        self.fill_treasures_list()
         self.map = [list(row.replace('\n', '')) for row in map_string]
 
     def print_map(self):
         for row in self.map:
             print("".join(row))
 
-    def collect_treasure(self):
-        pass
+    def collect_treasure(self, hero):
+        
+        hero.set_treasure(self.treasures[0])
+        self.treasures = self.treasures[1:]
 
     def fight(self):
         pass
@@ -35,7 +40,7 @@ class Dungeon:
         if pos == '#':
             return False
         if pos == 'T':
-            self.collect_treasure()
+            self.collect_treasure(hero)
             return True
         if pos == 'E':
             return self.fight()
