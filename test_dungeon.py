@@ -38,14 +38,13 @@ class TestDungeon(unittest.TestCase):
             pass
 
     def test_spawn(self):
-
         self.assertTrue(self.dungeon.spawn(self.hero))
-        self.assertEqual(self.dungeon.map[0][0], 'H')
+        self.assertEqual(self.dungeon._Dungeon__map[0][0], 'H')
 
     def test_place(self):
-        self.dungeon.place(0, 1, 0, 0)
-        self.assertEqual(self.dungeon.map[0][0], '.')
-        self.assertEqual(self.dungeon.map[0][1], 'H')
+        self.dungeon._Dungeon__place(0, 1, 0, 0)
+        self.assertEqual(self.dungeon._Dungeon__map[0][0], '.')
+        self.assertEqual(self.dungeon._Dungeon__map[0][1], 'H')
 
     def test_move_hero(self):
         self.dungeon.spawn(self.hero)
@@ -55,6 +54,9 @@ class TestDungeon(unittest.TestCase):
             self.assertFalse(self.dungeon.move_hero("up"))
         with self.subTest("return false when moves to wall "):
             self.assertFalse(self.dungeon.move_hero("right"))
+        with self.subTest("value error when the given direction is not valid"):
+            with self.assertRaises(ValueError, msg="Wrong direction."):
+                self.dungeon.move_hero("Left")
 
 
 
