@@ -47,8 +47,9 @@ def verify_value(arg, *values):
         return True
 
 
-def verify_direction(direction):
-    if direction == 'up' or direction == 'down' or direction == 'left' or direction == 'down':
-        return True
-    raise ValueError("Wrong direction")
+def verify_direction(*args):
+    for direction in enumerate(args):
+        if direction == 'up' or direction == 'down' or direction == 'left' or direction == 'down':
+            return True
+        raise ValueError("Wrong direction")
 
