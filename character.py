@@ -1,8 +1,9 @@
 from verify import *
-
+from weapon import Weapon
+from spell import Spell
 
 class Character:
-    def __init__(self, health, mana):
+    def __init__(self, health, mana, weapon, spell):
         verify_int(health)
         verify_int(mana)
         verify_positive(health)
@@ -11,12 +12,15 @@ class Character:
         self.mana = mana
         self.max_health = health
         self.max_mana = mana
+        self.weapon = weapon
+        self.spell = spell
 
     def is_alive(self):
         return self.health > 0
 
     def can_cast(self):
-        return self.mana > 0
+        if self.spell is not None:
+            return (self.mana - self.spell.mana_cost) > 0
 
     def get_health(self):
         return self.health
@@ -48,3 +52,24 @@ class Character:
         verify_number(damage_points)
         verify_positive(damage_points)
         self.health = max(self.health - damage_points, 0)
+
+    def equip(self, weapon):
+        verify_class_type(weapon, Weapon)
+        self.weapon = weapon
+
+    def cast(self):
+        self.mana_points -= self.spell.mana_cost
+        return self.spell.damage
+
+    def learn(self, spell):
+        verify_class_type(spell, Spell)
+        self.spell = spell
+
+    def attack(self, by):
+        verify_value(by, ['weapon', 'magic'])
+        if by == 'weapon' and self.weapon is not None:
+            return self.weapon.damage
+        elif by == 'magic' and self.spell is not None and self.can_cast():
+            return self.cast()
+        else:
+            return 0

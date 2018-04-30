@@ -4,4 +4,3 @@ class Spell:
         self.damage = damage
         self.mana_cost = mana_cost
         self.cast_range = cast_range
-
