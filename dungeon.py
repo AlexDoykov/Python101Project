@@ -1,5 +1,5 @@
 from verify import verify_direction
-
+from enemy import Enemy
 
 class Dungeon:
     def __init__(self, file_name):
@@ -22,7 +22,7 @@ class Dungeon:
         return [list(row.replace('\n', '')) for row in map_string]
 
     def print_map(self):
-        for row in self.map:
+        for row in self.__map:
             print("".join(row))
 
     def __collect_treasure(self, hero):
@@ -30,7 +30,8 @@ class Dungeon:
         self.treasures = self.treasures[1:]
 
     def __fight(self):
-        pass
+        Fight(self.hero, self.enemy)
+        return 
 
     def __is_free(self, pos):
         if pos == 'S' or pos == '.':
@@ -93,7 +94,7 @@ class Dungeon:
                 return True
 
         if direction == "down":
-            if self.__is_free(self.__map[self.__hero_x][self.__hero_y + 1]):
+            if self.__is_free(self.__map[self.__hero_x + 1][self.__hero_y]):
                 self.__place(
                     self.__hero_x + 1,
                     self.__hero_y,

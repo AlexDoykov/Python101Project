@@ -48,6 +48,8 @@ class TestDungeon(unittest.TestCase):
 
     def test_move_hero(self):
         self.dungeon.spawn(self.hero)
+        with self.subTest("return false when moves outside the map"):
+            self.assertFalse(self.dungeon.move_hero("down"))
         with self.subTest("move to free space"):
             self.assertTrue(self.dungeon.move_hero("right"))
         with self.subTest("return false when moves outside the map"):
