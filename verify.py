@@ -50,7 +50,7 @@ def verify_value(arg, *values):
 def verify_direction(*args):
     def inner_func(func):
         def check_if_direction_is_valid(self, direction):
-            for index, allowed_direction in enumerate(args):
+            for allowed_direction in args:
                 if direction == allowed_direction:
                     return func(self, direction)
             raise ValueError("Wrong direction.")
