@@ -1,10 +1,12 @@
 from verify import verify_direction
+from enemy import Enemy
 
 
 class Dungeon:
     def __init__(self, file_name):
         self.__file_name = file_name
         self.__treasures = []
+        self.__enemies = []
         self.__map = self.__fill_map()
         self.__hero_x = 0
         self.__hero_y = 0
@@ -16,13 +18,24 @@ class Dungeon:
     def __fill_treasures_list(self):
         pass
 
+    def __fill_enemies_list(self):
+        enemies_data = self.__read_file("enemies_" + self.__file_name)
+        enemies = []
+        for enemy_data in enemies_data:
+            enemy_splitted_data = [
+                int(data.replace('\n', '')) for data in enemy_data.split(',')
+            ]
+            enemies.append(Enemy(*enemy_splitted_data))
+        return enemies
+
     def __fill_map(self):
         map_string = self.__read_file(self.__file_name)
         self.__fill_treasures_list()
+        self.__enemies = self.__fill_enemies_list()
         return [list(row.replace('\n', '')) for row in map_string]
 
     def print_map(self):
-        for row in self.map:
+        for row in self.__map:
             print("".join(row))
 
     def __collect_treasure(self, hero):
@@ -30,7 +43,10 @@ class Dungeon:
         self.treasures = self.treasures[1:]
 
     def __fight(self):
-        pass
+        enemy = self.__enemies[0]
+        self.__enemies = self.__enemies[1:]
+        fight = Fight(self.__hero, enemy)
+        return fight.conduct_fight()
 
     def __is_free(self, pos):
         if pos == 'S' or pos == '.':
