@@ -48,8 +48,11 @@ def verify_value(arg, *values):
 
 
 def verify_direction(*args):
-    for direction in enumerate(args):
-        if direction == 'up' or direction == 'down' or direction == 'left' or direction == 'down':
-            return True
-        raise ValueError("Wrong direction")
-
+    def inner_func(func):
+        def check_if_direction_is_valid(self, direction):
+            for index, allowed_direction in enumerate(args):
+                if direction == allowed_direction:
+                    return func(self, direction)
+            raise ValueError("Wrong direction.")
+        return check_if_direction_is_valid
+    return inner_func
