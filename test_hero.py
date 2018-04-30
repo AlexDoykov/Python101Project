@@ -7,8 +7,10 @@ class TestHero(unittest.TestCase):
         self.hero = Hero(
             name="Bron",
             title="Dragonslayer",
-            health=100, mana=100,
-            mana_regeneration_rate=2)
+            health=100,
+            mana=100,
+            mana_regeneration_rate=2
+        )
 
     def test_known_as(self):
         self.assertEqual(self.hero.known_as(), "Bron the Dragonslayer")
@@ -17,7 +19,6 @@ class TestHero(unittest.TestCase):
         self.hero.take_damage(20)
         self.assertEqual(self.hero.health, 80)
 
-
     def test_type_error(self):
         with self.assertRaises(TypeError):
             Hero(4, 'a', 3, 5, 2)
@@ -25,7 +26,6 @@ class TestHero(unittest.TestCase):
             Hero('a', 'b', 6, 5, 'c')
             self.hero.equip(5)
             self.hero.learn('a')
-
 
     def test_value_error(self):
         with self.assertRaises(ValueError):
