@@ -2,6 +2,7 @@ from verify import *
 from weapon import Weapon
 from spell import Spell
 
+
 class Character:
     def __init__(self, health, mana, weapon, spell):
         verify_int(health)

@@ -1,5 +1,8 @@
 from verify import verify_direction
 from enemy import Enemy
+from hero import Hero
+from treasures import Treasure
+
 
 class Dungeon:
     def __init__(self, file_name):
@@ -14,7 +17,14 @@ class Dungeon:
             return file.readlines()
 
     def __fill_treasures_list(self):
-        pass
+        treasures_list = []
+        lines = self.__read_file('treasures_level1.txt')
+        for line in lines:
+            values = line.split()
+            if len(values) == 3:
+                values[1], values[2] = values[2], values[1]
+            treasures_list.append(Treasure(values))
+        return treasures_list
 
     def __fill_map(self):
         map_string = self.__read_file(self.__file_name)
