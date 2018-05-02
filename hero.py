@@ -20,6 +20,7 @@ class Hero(Character):
         self.name = name
         self.title = title
         self.mana_regeneration_rate = mana_regeneration_rate
+        self.checkpoint_position = (0, 0)
 
     def known_as(self):
         return f'{self.name} the {self.title}'
@@ -34,3 +35,7 @@ class Hero(Character):
             self.take_mana(treasure.item)
         else:
             self.take_healing(treasure.item)
+
+    def regenerate(self):
+        self.mana = self.max_mana
+        self.health = self.max_health
