@@ -23,7 +23,7 @@ class Dungeon:
             values = line.split()
             if len(values) == 3:
                 values[1], values[2] = values[2], values[1]
-            values[1]=int(values[1])
+            values[1] = int(values[1])
             self.__treasures.append(Treasure(*values))
 
     def __fill_enemies_list(self):
@@ -46,15 +46,20 @@ class Dungeon:
         for row in self.__map:
             print("".join(row))
 
+    def create_checkpoint(self):
+        self.__hero.checkpoint_position = (self.__hero_x, self.__hero_y)
+
     def __collect_treasure(self, hero):
         hero.__set_treasure(self.treasures[0])
         self.treasures = self.treasures[1:]
 
     def __fight(self):
         enemy = self.__enemies[0]
-        self.__enemies = self.__enemies[1:]
         fight = Fight(self.__hero, enemy)
-        return fight.conduct_fight()
+        result = fight.conduct_fight()
+        if result:
+            self.__enemies = self.__enemies[1:]
+        return result
 
     def __is_free(self, pos):
         if pos == 'S' or pos == '.':
@@ -65,8 +70,16 @@ class Dungeon:
             # self.__collect_treasure(self.hero)
             return True
         if pos == 'E':
-            return self.__fight()
-        return False
+            result = self.__fight()
+            if not result:
+                self.__place(
+                    self.__hero.checkpoint_position[0],
+                    self.__hero.checkpoint_position[1],
+                    self.__hero_x,
+                    self.__hero_y
+                )
+                self.__hero.regenerate()
+            return result
 
     def spawn(self, hero):
         self.__hero = hero
