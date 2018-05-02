@@ -1,2 +1,2 @@
-health 10
 weapon sword 100
+health 10

@@ -19,14 +19,19 @@ def main():
     dungeon_map = Dungeon("level1.txt")
     dungeon_map.spawn(h)
     dungeon_map.print_map()
-    #dungeon_map.hero_attack(by="spell") to be implemented
+    print()
+    # dungeon_map.hero_attack(by="magic")
     dungeon_map.move_hero("right")
     dungeon_map.move_hero("down")
+    # print("Hero health: ", h.get_health())
     dungeon_map.move_hero("down")
     dungeon_map.move_hero("down")
     dungeon_map.print_map()
+    print()
     dungeon_map.move_hero("right")
     dungeon_map.print_map()
+    print()
+
 
 
 if __name__ == '__main__':
