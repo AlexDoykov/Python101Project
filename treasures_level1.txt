@@ -1,1 +1,2 @@
-health mana weapon
+health 10
+weapon sword 100

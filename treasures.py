@@ -3,7 +3,7 @@ from spell import Spell
 from verify import *
 
 
-class Treasures:
+class Treasure:
     def __init__(self, value_type, value, name=None):
         verify_number(value)
         verify_positive(value)

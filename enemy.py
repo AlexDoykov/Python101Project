@@ -14,5 +14,5 @@ class Enemy(Character):
         self.damage = damage
 
     def attack(self, by):
-        if Character.attack(by) == 0:
-            return damage
+        if Character.attack(self, by) == 0:
+            return self.damage
