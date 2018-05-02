@@ -25,11 +25,13 @@ class Hero(Character):
     def known_as(self):
         return f'{self.name} the {self.title}'
 
-    def __set_treasure(self, treasure):
+    def set_treasure(self, treasure):
         verify_class_type(treasure, Treasure)
-        if treasure.type == 'weapon':
-            self.equip(treasure.item)
-        elif treasure.type == 'spell':
+        if treasure.type == 'weapon' and\
+                treasure.item.damage > self.weapon.damage:
+                self.equip(treasure.item)
+        elif treasure.type == 'spell' and\
+                treasure.item.damage > self.spell.damage:
             self.learn(treasure.item)
         elif treasure.type == 'mana':
             self.take_mana(treasure.item)

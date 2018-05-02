@@ -8,9 +8,9 @@ class Treasure:
         verify_number(value)
         verify_positive(value)
         self.type = value_type
-        if value_type is 'weapon':
+        if value_type == 'weapon':
             self.item = Weapon(name, value)
-        elif value_type is 'spell':
+        elif value_type == 'spell':
             self.item = Spell(name, value)
         else:
             self.item = value

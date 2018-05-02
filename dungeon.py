@@ -50,8 +50,8 @@ class Dungeon:
         self.__hero.checkpoint_position = (self.__hero_x, self.__hero_y)
 
     def __collect_treasure(self, hero):
-        hero.__set_treasure(self.treasures[0])
-        self.treasures = self.treasures[1:]
+        hero.set_treasure(self.__treasures[0])
+        self.__treasures = self.__treasures[1:]
 
     def __fight(self):
         enemy = self.__enemies[0]
@@ -67,7 +67,7 @@ class Dungeon:
         if pos == '#':
             return False
         if pos == 'T':
-            # self.__collect_treasure(self.hero)
+            self.__collect_treasure(self.__hero)
             return True
         if pos == 'E':
             result = self.__fight()
