@@ -59,7 +59,7 @@ class Character:
         self.weapon = weapon
 
     def cast(self):
-        self.mana_points -= self.spell.mana_cost
+        self.mana -= self.spell.mana_cost
         return self.spell.damage
 
     def learn(self, spell):

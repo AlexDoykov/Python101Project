@@ -23,7 +23,8 @@ class Dungeon:
             values = line.split()
             if len(values) == 3:
                 values[1], values[2] = values[2], values[1]
-            self.__treasures.append(Treasure(values))
+            values[1]=int(values[1])
+            self.__treasures.append(Treasure(*values))
 
     def __fill_enemies_list(self):
         enemies_data = self.__read_file("enemies_" + self.__file_name)
@@ -68,7 +69,7 @@ class Dungeon:
         return False
 
     def spawn(self, hero):
-        self.hero = hero
+        self.__hero = hero
         for row_index, row in enumerate(self.__map):
             for pos_index, pos in enumerate(row):
                 if self.__is_free(pos):
