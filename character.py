@@ -73,4 +73,4 @@ class Character:
         elif by == 'magic' and self.spell is not None and self.can_cast():
             return self.cast()
         else:
-            return 0
+            return None
