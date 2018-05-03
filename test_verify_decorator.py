@@ -1,0 +1,41 @@
+from character import Character
+from weapon import Weapon
+from spell import Spell
+
+
+# **kwarg
+h1 = Character(
+    health=100,
+    mana=100,
+    weapon=Weapon("sword", 40),
+    spell=Spell("spell", 30, 30, 10)
+)
+
+h2 = Character(
+    weapon=Weapon("sword", 40),
+    spell=Spell("spell", 30, 30, 10),
+    health=100,
+    mana=100,
+)
+
+# ValueError: ValueError: Positive number requested!
+# Positive verifying works!
+# h3 = Character(
+#     health=-100,
+#     mana=100,
+#     weapon=Weapon("sword", 40),
+#     spell=Spell("spell", 30, 30, 10)
+# )
+
+# *args
+h4 = Character(
+    100, 100,
+    Weapon("sword", 40),
+    Spell("spell", 30, 30, 10)
+)
+
+h1.take_healing(3)
+
+# ValueError: ValueError: Positive number requested!
+# Positive verifying works!
+h2.take_healing(-2)

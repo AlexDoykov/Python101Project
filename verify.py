@@ -1,43 +1,34 @@
-def verify_int(arg):
-    if type(arg) is not int:
-        raise TypeError("Int expected")
-    else:
-        return True
+from collections import Iterable
 
 
-def verify_positive(arg):
-    if arg < 0:
-        raise ValueError("Positive expected")
-    else:
-        return True
+def verify_types(*args):
+    types = args
+
+    def inner_function(func):
+        def typeCheck(self, *args, **kwargs):
+            if len(kwargs) > 0:
+                args = list(kwargs.values())
+            for idx, arg in enumerate(types):
+                if type(args[idx]) is not types[idx] and\
+                    (isinstance(types[idx], Iterable) and
+                        type(args[idx]) not in types[idx]):
+                    raise TypeError(
+                        f'TypeError: Argument {idx + 1} of {func} is not {types[idx]}!'
+                    )
+            return func(self, *args)
+        return typeCheck
+    return inner_function
 
 
-def verify_string(arg):
-    if type(arg) is not str:
-        raise TypeError("String expected")
-    else:
-        return True
+def verify_positive(func):
+    def checkPositive(self, *args):
+        for arg in args:
+            if (type(arg) is float or
+                    type(arg) is int) and arg < 0:
+                raise ValueError("ValueError: Positive number requested!")
+        return func(self, *args)
+    return checkPositive
 
-
-def verify_float(arg):
-    if type(arg) is not float:
-        raise TypeError("Float expected")
-    else:
-        return True
-
-
-def verify_number(arg):
-    if type(arg) is not int and type(arg) is not float:
-        raise TypeError("Int or float expected")
-    else:
-        return True
-
-
-def verify_class_type(arg, class_type):
-    if type(arg) is not class_type:
-        raise TypeError(f"{class_type} expected")
-    else:
-        return True
 
 
 def verify_value(arg, *values):
