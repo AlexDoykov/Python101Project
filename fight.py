@@ -4,20 +4,17 @@ class Fight:
         self.__hero = hero
         self.__enemy = enemy
 
-    def conduct_fight(self):
-            hero_attack = self.__choose_weapon_or_spell(self.__hero)
-            enemy_attack = self.__choose_weapon_or_spell(self.__enemy)
-            self.__enemy.take_damage(hero_attack)
-            print(f"Enemy take {hero_attack} damage")
-            if not self.__enemy.is_alive():
-                print("Enemy is dead")
-                return True
+    def conduct_fight(self, hero_attack, hero, enemy_attack, enemy, skip):
+        self.__enemy.take_damage(hero_attack)
+        if not self.__enemy.is_alive():
+            return True
+        if skip:
+            print("Enemy moves one square in order to get to the hero. This is his move.")
+        else:
             self.__hero.take_damage(enemy_attack)
-            print(f"Hero take {hero_attack} damage")
-            if not self.__hero.is_alive():
-                print("Hero is dead")
-                return False
-            return self.conduct_fight()
+        if not self.__hero.is_alive():
+            return False
+        return None
 
     def fight(self, default, dist_to_enemy):
         hero_attack = self.__choose_weapon_or_spell(self.__hero, default)
