@@ -104,6 +104,9 @@ class Dungeon:
     def remove_enemy(self, position):
         self.__map[position[0]][position[1]] = '.'
 
+    def place_enemy(self, x, y):
+        self.__map[x][y] = 'E'
+
     def hero_attack(self, by):
         if by == 'magic':
             if self.__hero.spell is None:
@@ -119,9 +122,12 @@ class Dungeon:
         if position is None:
             print("Nothing in rage to attack!")
             return
+        hero_x_before_fight = self.__hero_x
+        hero_y_before_fight = self.__hero_y
         fight_result = self.__fight(by, position[2])
-        if fight_result:
-            self.remove_enemy(position)
+        self.remove_enemy(position)
+        if not fight_result:
+            self.place_enemy(hero_x_before_fight, hero_y_before_fight)
 
     def __fight(self, by, dist_to_enemy):
         enemy = self.__choose_enemy()
