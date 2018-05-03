@@ -19,10 +19,31 @@ class Fight:
                 return False
             return self.conduct_fight()
 
-    def __choose_weapon_or_spell(self, character):
+    def fight(self, default):
+        hero_attack = self.__choose_weapon_or_spell(self.__hero, default)
+        enemy_attack = self.__choose_weapon_or_spell(self.__enemy, default)
+        result = self.conduct_fight(
+            hero_attack,
+            self.__hero,
+            enemy_attack,
+            self.__enemy
+        )
+        if result is None:
+            return self.fight(default)
+        else:
+            return result
+
+    def __choose_weapon_or_spell(self, character, default):
+        if character.__class__.__name__ == "Hero":
+            by_default = character.attack(default)
+            if by_default is not None:
+                return by_default
         by_weapon = character.attack("weapon")
-        by_spell = character.attack("magic")
-        if character.can_cast and\
-                by_weapon < by_spell:
-            return by_spell
+        if by_weapon is None:
+            by_spell = character.attack("magic")
+            if by_spell is None:
+                return 0
+            if character.can_cast and\
+                    by_weapon < by_spell:
+                return by_spell
         return by_weapon

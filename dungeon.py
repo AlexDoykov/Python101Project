@@ -56,13 +56,87 @@ class Dungeon:
         hero.set_treasure(self.__treasures[0])
         self.__treasures = self.__treasures[1:]
 
-    def __fight(self):
-        enemy = self.__enemies[0]
-        print("Enemy:", enemy)
+    def __choose_enemy(self):
+        return self.__enemies[0]
+
+    def __in_map(self, x, y):
+        if (x < 0 or x >= len(self.__map)) or (y < 0 or y >= len(self.__map[0])):
+            return False
+        return True
+
+    def __check_sell(self, x, y):
+        if self.__in_map(x, y):
+            cell = self.__map[x][y]
+            if cell == 'E':
+                return (x, y)
+        return None
+
+    def __check_range(self, range_to_check, current_range=1):
+        if range_to_check >= current_range:
+            result = self.__check_sell(
+                self.__hero_x + current_range,
+                self.__hero_y
+            )
+            if result is not None:
+                return result
+            result = self.__check_sell(
+                self.__hero_x - current_range,
+                self.__hero_y
+            )
+            if result is not None:
+                return result
+            result = self.__check_sell(
+                self.__hero_x,
+                self.__hero_y + current_range
+            )
+            if result is not None:
+                return result
+            result = self.__check_sell(
+                self.__hero_x,
+                self.__hero_y - current_range
+            )
+            if result is not None:
+                return result
+            return self.__check_range(range_to_check, current_range + 1)
+        return None
+
+    def remove_enemy(self, position):
+        self.__map[position[0]][position[1]] = '.'
+
+    def hero_attack(self, by):
+        if by == 'magic':
+            if self.__hero.spell is None:
+                print("You don't have spell to attack")
+                return
+            range_to_cast = self.__hero.spell.cast_range
+        if by == 'weapon':
+            if self.__hero.weapon is None:
+                print("You don't have weapon to attack")
+                return
+            range_to_cast = self.__hero.spell.cast_range
+        position = self.__check_range(range_to_cast)
+        if position is None:
+            print("Nothing in rage to attack!")
+            return
+        print(by)
+        fight_result = self.__fight(by)
+        if fight_result:
+            self.remove_enemy(position)
+
+    def __fight(self, by):
+        enemy = self.__choose_enemy()
         fight = Fight(self.__hero, enemy)
-        result = fight.conduct_fight()
+        result = fight.fight(by)
         if result:
             self.__enemies = self.__enemies[1:]
+        else:
+            self.__place(
+                self.__hero.checkpoint_position[0],
+                self.__hero.checkpoint_position[1],
+                self.__hero_x,
+                self.__hero_y
+            )
+            self.__hero.regenerate()
         return result
 
     # TODO
@@ -78,7 +152,7 @@ class Dungeon:
             self.__collect_treasure(self.__hero)
             return True
         if pos == 'E':
-            result = self.__fight()
+            result = self.__fight(None)
             if not result:
                 self.__place(
                     self.__hero.checkpoint_position[0],
