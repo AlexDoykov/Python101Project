@@ -64,36 +64,40 @@ class Dungeon:
             return False
         return True
 
-    def __check_sell(self, x, y):
+    def __check_sell(self, x, y, dist_to_enemy):
         if self.__in_map(x, y):
             cell = self.__map[x][y]
             if cell == 'E':
-                return (x, y)
+                return (x, y, dist_to_enemy)
         return None
 
     def __check_range(self, range_to_check, current_range=1):
         if range_to_check >= current_range:
             result = self.__check_sell(
                 self.__hero_x + current_range,
-                self.__hero_y
+                self.__hero_y,
+                current_range
             )
             if result is not None:
                 return result
             result = self.__check_sell(
                 self.__hero_x - current_range,
-                self.__hero_y
+                self.__hero_y,
+                current_range
             )
             if result is not None:
                 return result
             result = self.__check_sell(
                 self.__hero_x,
-                self.__hero_y + current_range
+                self.__hero_y + current_range,
+                current_range
             )
             if result is not None:
                 return result
             result = self.__check_sell(
                 self.__hero_x,
-                self.__hero_y - current_range
+                self.__hero_y - current_range,
+                current_range
             )
             if result is not None:
                 return result
@@ -118,15 +122,14 @@ class Dungeon:
         if position is None:
             print("Nothing in rage to attack!")
             return
-        print(by)
-        fight_result = self.__fight(by)
+        fight_result = self.__fight(by, position[2])
         if fight_result:
             self.remove_enemy(position)
 
-    def __fight(self, by):
+    def __fight(self, by, dist_to_enemy):
         enemy = self.__choose_enemy()
         fight = Fight(self.__hero, enemy)
-        result = fight.fight(by)
+        result = fight.fight(by, dist_to_enemy)
         if result:
             self.__enemies = self.__enemies[1:]
         else:

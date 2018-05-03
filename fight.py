@@ -19,17 +19,23 @@ class Fight:
                 return False
             return self.conduct_fight()
 
-    def fight(self, default):
+    def fight(self, default, dist_to_enemy):
         hero_attack = self.__choose_weapon_or_spell(self.__hero, default)
         enemy_attack = self.__choose_weapon_or_spell(self.__enemy, default)
+        if dist_to_enemy == 0:
+            skip = False
+        else:
+            skip = True
+            dist_to_enemy -= 1
         result = self.conduct_fight(
             hero_attack,
             self.__hero,
             enemy_attack,
-            self.__enemy
+            self.__enemy,
+            skip
         )
         if result is None:
-            return self.fight(default)
+            return self.fight(default, dist_to_enemy)
         else:
             return result
 
