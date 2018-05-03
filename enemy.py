@@ -10,7 +10,7 @@ class Enemy(Character):
             mana=mana,
             weapon=None,
             spell=None)
-        verify_number(damage)
+        # verify_number(damage)
         self.damage = damage
 
     def attack(self, by):

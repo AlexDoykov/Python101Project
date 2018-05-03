@@ -5,7 +5,7 @@ from verify import *
 
 class Treasure:
     def __init__(self, value_type, value, name=None):
-        verify_number(value)
+        # verify_number(value)
         verify_positive(value)
         self.type = value_type
         if value_type == 'weapon':

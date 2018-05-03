@@ -4,11 +4,9 @@ from spell import Spell
 
 
 class Character:
+    @verify_types(int, int)
+    @verify_positive
     def __init__(self, health, mana, weapon, spell):
-        verify_int(health)
-        verify_int(mana)
-        verify_positive(health)
-        verify_positive(mana)
         self.health = health
         self.mana = mana
         self.max_health = health
@@ -29,9 +27,9 @@ class Character:
     def get_mana(self):
         return self.mana
 
+    @verify_types(int)
+    @verify_positive
     def take_healing(self, healing_points):
-        verify_int(healing_points)
-        verify_positive(healing_points)
         if not self.is_alive():
             return False
         self.health = min(
@@ -39,9 +37,9 @@ class Character:
             self.max_health)
         return True
 
+    @verify_types(int)
+    @verify_positive
     def take_mana(self, mana_points):
-        verify_int(mana_points)
-        verify_positive(mana_points)
         if not self.is_alive():
             return False
         self.mana = min(
@@ -49,21 +47,21 @@ class Character:
             self.max_mana)
         return True
 
+    @verify_types([int, float])
+    @verify_positive
     def take_damage(self, damage_points):
-        verify_number(damage_points)
-        verify_positive(damage_points)
         self.health = max(self.health - damage_points, 0)
 
+    @verify_types(Weapon)
     def equip(self, weapon):
-        verify_class_type(weapon, Weapon)
         self.weapon = weapon
 
     def cast(self):
         self.mana -= self.spell.mana_cost
         return self.spell.damage
 
+    @verify_types(Spell)
     def learn(self, spell):
-        verify_class_type(spell, Spell)
         self.spell = spell
 
     def attack(self, by):

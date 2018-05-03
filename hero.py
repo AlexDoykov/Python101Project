@@ -14,9 +14,9 @@ class Hero(Character):
             weapon=None,
             spell=None
         )
-        verify_string(name)
-        verify_string(title)
-        verify_number(mana_regeneration_rate)
+        # verify_string(name)
+        # verify_string(title)
+        # verify_number(mana_regeneration_rate)
         self.name = name
         self.title = title
         self.mana_regeneration_rate = mana_regeneration_rate
@@ -26,7 +26,7 @@ class Hero(Character):
         return f'{self.name} the {self.title}'
 
     def set_treasure(self, treasure):
-        verify_class_type(treasure, Treasure)
+        # verify_class_type(treasure, Treasure)
         if treasure.type == 'weapon' and\
                 (self.weapon is None or
                     treasure.item.damage > self.weapon.damage):
