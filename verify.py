@@ -1,33 +1,36 @@
 from collections import Iterable
 
 
-def verify_types(*args):
-    types = args
+def verify_types(*args, **kwargs):
+    types = kwargs
 
-    def inner_function(func):
+    for position, arg in enumerate(args):
+        types[position] = arg
+
+    def decorator(func):
         def typeCheck(self, *args, **kwargs):
-            if len(kwargs) > 0:
-                args = list(kwargs.values())
-            for idx, arg in enumerate(types):
-                if type(args[idx]) is not types[idx] and\
-                    (isinstance(types[idx], Iterable) and
-                        type(args[idx]) not in types[idx]):
+            for arg in types.keys():
+                if type(kwargs[arg]) is not types[arg] and\
+                    not(isinstance(types[arg], Iterable) and
+                        type(kwargs[arg]) in types[arg]):
                     raise TypeError(
-                        f'TypeError: Argument {idx + 1} of {func} is not {types[idx]}!'
+                        f'TypeError: Argument {arg} of {func} is not {types[arg]}!'
                     )
-            return func(self, *args)
+
+            return func(self, **kwargs)
         return typeCheck
-    return inner_function
+    return decorator
 
-
-def verify_positive(func):
-    def checkPositive(self, *args):
-        for arg in args:
-            if (type(arg) is float or
-                    type(arg) is int) and arg < 0:
-                raise ValueError("ValueError: Positive number requested!")
-        return func(self, *args)
-    return checkPositive
+def verify_pisitive(**kwargs):
+    def decorator(func):
+        def checkPositive(self, *kwargs):
+            for arg in kwargs:
+                if (type(arg) is float or
+                        type(arg) is int) and arg < 0:
+                    raise ValueError("ValueError: Positive number requested!")
+            return func(self, *kwargs)
+        return checkPositive
+    return decorator
 
 
 
