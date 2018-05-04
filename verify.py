@@ -9,9 +9,10 @@ def verify_types(*args):
             if len(kwargs) > 0:
                 args = list(kwargs.values())
             for idx, arg in enumerate(types):
+                print(args[idx], type(args[idx]), types[idx])
                 if type(args[idx]) is not types[idx] and\
-                    (isinstance(types[idx], Iterable) and
-                        type(args[idx]) not in types[idx]):
+                    not (isinstance(types[idx], Iterable) and
+                        type(args[idx]) in types[idx]):
                     raise TypeError(
                         f'TypeError: Argument {idx + 1} of {func} is not {types[idx]}!'
                     )
