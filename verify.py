@@ -25,16 +25,21 @@ def verify_types(*args, **kwargs):
         return typeCheck
     return decorator
 
-def verify_pisitive(**kwargs):
-    def decorator(func):
-        def checkPositive(self, *kwargs):
-            for arg in kwargs:
-                if (type(arg) is float or
-                        type(arg) is int) and arg < 0:
-                    raise ValueError("ValueError: Positive number requested!")
-            return func(self, *kwargs)
-        return checkPositive
-    return decorator
+
+def verify_positive(func):
+    # def decorator(func):
+    def checkPositive(self, *args, **kwargs):
+        for arg in args:
+            if (type(arg) is float or
+                    type(arg) is int) and arg < 0:
+                raise ValueError("ValueError: Positive number requested!")
+        for arg in kwargs:
+            if (type(arg) is float or
+                    type(arg) is int) and arg < 0:
+                raise ValueError("ValueError: Positive number requested!")
+        return func(self, *args, **kwargs)
+    return checkPositive
+    # return decorator
 
 
 
