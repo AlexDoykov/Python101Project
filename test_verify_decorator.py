@@ -15,8 +15,15 @@ h2 = Character(
     weapon=Weapon("sword", 40),
     spell=Spell("spell", 30, 30, 10),
     health=100,
-    mana=100,
+    mana=100
 )
+
+# h3 = Character(
+#     weapon=Weapon("sword", 40),
+#     spell=Spell("spell", 30, 30, 10),
+#     health='100',
+#     mana=100
+# )
 
 # ValueError: ValueError: Positive number requested!
 # Positive verifying works!
@@ -28,14 +35,9 @@ h2 = Character(
 # )
 
 # *args
-h4 = Character(
-    100, 100,
-    Weapon("sword", 40),
-    Spell("spell", 30, 30, 10)
-)
 
-h1.take_healing(3)
+h1.take_healing(healing_points=3)
 
 # ValueError: ValueError: Positive number requested!
 # Positive verifying works!
-h2.take_healing(-2)
+h2.take_healing(healing_points=-2)

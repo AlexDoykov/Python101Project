@@ -4,8 +4,8 @@ from spell import Spell
 
 
 class Character:
-    @verify_types(int, int)
-    @verify_positive
+    # @verify_positive
+    @verify_types(health=int, mana=int)
     def __init__(self, health, mana, weapon, spell):
         self.health = health
         self.mana = mana
@@ -27,8 +27,8 @@ class Character:
     def get_mana(self):
         return self.mana
 
-    @verify_types(int)
-    @verify_positive
+    # @verify_positive
+    @verify_types(healing_points=int)
     def take_healing(self, healing_points):
         if not self.is_alive():
             return False
@@ -37,8 +37,8 @@ class Character:
             self.max_health)
         return True
 
-    @verify_types(int)
-    @verify_positive
+    # @verify_positive
+    @verify_types(mana_points=int)
     def take_mana(self, mana_points):
         if not self.is_alive():
             return False
@@ -47,12 +47,12 @@ class Character:
             self.max_mana)
         return True
 
-    @verify_types([int, float])
-    @verify_positive
+    # @verify_positive
+    @verify_types(damage_points=[int, float])
     def take_damage(self, damage_points):
         self.health = max(self.health - damage_points, 0)
 
-    @verify_types(Weapon)
+    # @verify_types(weapon=Weapon)
     def equip(self, weapon):
         self.weapon = weapon
 
@@ -60,7 +60,7 @@ class Character:
         self.mana -= self.spell.mana_cost
         return self.spell.damage
 
-    @verify_types(Spell)
+    @verify_types(spell=Spell)
     def learn(self, spell):
         self.spell = spell
 

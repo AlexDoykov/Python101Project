@@ -1,34 +1,46 @@
 from collections import Iterable
 
 
-def verify_types(*args):
-    types = args
+def verify_types(*args, **kwargs):
+    types = kwargs
 
-    def inner_function(func):
+    for position, arg in enumerate(args):
+        types[position] = arg
+
+    def decorator(func):
         def typeCheck(self, *args, **kwargs):
-            if len(kwargs) > 0:
-                args = list(kwargs.values())
-            for idx, arg in enumerate(types):
-                print(args[idx], type(args[idx]), types[idx])
-                if type(args[idx]) is not types[idx] and\
-                    not (isinstance(types[idx], Iterable) and
-                        type(args[idx]) in types[idx]):
+            arguments = kwargs.copy()
+            for position, arg in enumerate(args):
+                arguments[position] = arg
+
+            for arg in types.keys():
+                if arg in kwargs.keys() and\
+                    type(arguments[arg]) is not types[arg] and\
+                    not(isinstance(types[arg], Iterable) and
+                        type(arguments[arg]) in types[arg]):
                     raise TypeError(
-                        f'TypeError: Argument {idx + 1} of {func} is not {types[idx]}!'
+                        f'TypeError: Argument {arg} of {func} is not {types[arg]}!'
                     )
-            return func(self, *args)
+
+            return func(self, *args, **kwargs)
         return typeCheck
-    return inner_function
+    return decorator
 
 
 def verify_positive(func):
-    def checkPositive(self, *args):
+    # def decorator(func):
+    def checkPositive(self, *args, **kwargs):
         for arg in args:
             if (type(arg) is float or
                     type(arg) is int) and arg < 0:
                 raise ValueError("ValueError: Positive number requested!")
-        return func(self, *args)
+        for arg in kwargs:
+            if (type(arg) is float or
+                    type(arg) is int) and arg < 0:
+                raise ValueError("ValueError: Positive number requested!")
+        return func(self, *args, **kwargs)
     return checkPositive
+    # return decorator
 
 
 
