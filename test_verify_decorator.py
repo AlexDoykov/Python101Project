@@ -40,4 +40,4 @@ h1.take_healing(3)
 
 # ValueError: ValueError: Positive number requested!
 # Positive verifying works!
-h2.take_healing(-2)
+# h2.take_healing(-2)
