@@ -36,8 +36,8 @@ h2 = Character(
 
 # *args
 
-h1.take_healing(healing_points=3)
+h1.take_healing(3)
 
 # ValueError: ValueError: Positive number requested!
 # Positive verifying works!
-h2.take_healing(healing_points=-2)
+h2.take_healing(-2)
