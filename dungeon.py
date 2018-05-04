@@ -97,6 +97,9 @@ class Dungeon:
         self.__hero_x = posX
         self.__hero_y = posY
 
+    def __restore_mana(self):
+        self.__hero.take_mana(self.__hero.mana_regeneration_rate)
+
     @verify_direction("left", "right", "up", "down")
     def move_hero(self, direction):
         if direction == "right":
@@ -107,6 +110,7 @@ class Dungeon:
                     self.__hero_x,
                     self.__hero_y
                 )
+                self.__restore_mana()
                 return True
 
         if direction == "left":
@@ -117,6 +121,7 @@ class Dungeon:
                     self.__hero_x,
                     self.__hero_y
                 )
+                self.__restore_mana()
                 return True
 
         if direction == "up":
@@ -127,6 +132,7 @@ class Dungeon:
                     self.__hero_x,
                     self.__hero_y
                 )
+                self.__restore_mana()
                 return True
 
         if direction == "down":
@@ -137,5 +143,6 @@ class Dungeon:
                     self.__hero_x,
                     self.__hero_y
                 )
+                self.__restore_mana()
                 return True
         return False

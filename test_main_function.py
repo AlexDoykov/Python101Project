@@ -10,7 +10,7 @@ def main():
         title="Dragonslayer",
         health=100,
         mana=100,
-        mana_regeneration_rate=2
+        mana_regeneration_rate=5
     )
     w = Weapon(name="The Axe of Destiny", damage=20)
     h.equip(w)
@@ -31,7 +31,9 @@ def main():
     dungeon_map.move_hero("right")
     dungeon_map.print_map()
     print()
-
+    print(h.get_mana())
+    dungeon_map.move_hero("right")
+    print(h.get_mana())
 
 
 if __name__ == '__main__':
