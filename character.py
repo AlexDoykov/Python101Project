@@ -28,7 +28,7 @@ class Character:
         return self.mana
 
     # @verify_positive
-    @verify_types(healing_points=int)
+    @verify_types(int)
     def take_healing(self, healing_points):
         if not self.is_alive():
             return False

@@ -9,15 +9,19 @@ def verify_types(*args, **kwargs):
 
     def decorator(func):
         def typeCheck(self, *args, **kwargs):
+            arguments = kwargs.copy()
+            for position, arg in enumerate(args):
+                arguments[position] = arg
+
             for arg in types.keys():
-                if type(kwargs[arg]) is not types[arg] and\
+                if type(arguments[arg]) is not types[arg] and\
                     not(isinstance(types[arg], Iterable) and
-                        type(kwargs[arg]) in types[arg]):
+                        type(arguments[arg]) in types[arg]):
                     raise TypeError(
                         f'TypeError: Argument {arg} of {func} is not {types[arg]}!'
                     )
 
-            return func(self, **kwargs)
+            return func(self, *args, **kwargs)
         return typeCheck
     return decorator
 
