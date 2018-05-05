@@ -7,3 +7,9 @@ class Weapon:
     def __init__(self, name, damage=20):
         self.name = name
         self.damage = damage
+
+    def __str__(self):
+        return f"{self.name}: damade {self.damage}"
+
+    def __gt__(self, other):
+        return self.damage > other.damage
