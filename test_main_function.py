@@ -19,7 +19,7 @@ def main():
     dungeon_map = Dungeon("level1.txt")
     dungeon_map.spawn(h)
     dungeon_map.print_map()
-    print()
+    # print()
     # dungeon_map.hero_attack(by="magic")
     dungeon_map.move_hero("right")
     dungeon_map.move_hero("down")
@@ -27,13 +27,18 @@ def main():
     dungeon_map.move_hero("down")
     dungeon_map.move_hero("down")
     dungeon_map.print_map()
-    print()
+    # print()
     dungeon_map.move_hero("right")
     dungeon_map.print_map()
+<<<<<<< 27fe4d6b6f5727d760bb85ea7894e2b9e924c2c5
     print()
     print(h.get_mana())
     dungeon_map.move_hero("right")
     print(h.get_mana())
+=======
+    # print()
+
+>>>>>>> finished decorators and some pretty messages
 
 
 if __name__ == '__main__':

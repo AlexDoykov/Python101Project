@@ -55,6 +55,7 @@ class Character:
     @verify_types(Weapon)
     def equip(self, weapon):
         self.weapon = weapon
+        print("You equiped a new weapon", weapon)
 
     def cast(self):
         self.mana -= self.spell.mana_cost
@@ -63,6 +64,7 @@ class Character:
     @verify_types(Spell)
     def learn(self, spell):
         self.spell = spell
+        print("You learned a new spell", spell)
 
     def attack(self, by):
         verify_value(by, ['weapon', 'magic'])

@@ -45,16 +45,20 @@ class Dungeon:
     def print_map(self):
         for row in self.__map:
             print("".join(row))
+        print()
 
     def create_checkpoint(self):
         self.__hero.checkpoint_position = (self.__hero_x, self.__hero_y)
 
     def __collect_treasure(self, hero):
+        from random import shuffle
+        shuffle(self.__treasures)
         hero.set_treasure(self.__treasures[0])
         self.__treasures = self.__treasures[1:]
 
     def __fight(self):
         enemy = self.__enemies[0]
+        print("Enemy:", enemy)
         fight = Fight(self.__hero, enemy)
         result = fight.conduct_fight()
         if result:
@@ -80,6 +84,9 @@ class Dungeon:
                 )
                 self.__hero.regenerate()
             return result
+        if pos == 'G':
+            print("Level finished")
+            return True
 
     def spawn(self, hero):
         self.__hero = hero
