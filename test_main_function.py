@@ -30,12 +30,15 @@ def main():
     # print()
     dungeon_map.move_hero("right")
     dungeon_map.print_map()
+<<<<<<< HEAD
 <<<<<<< 27fe4d6b6f5727d760bb85ea7894e2b9e924c2c5
     print()
     print(h.get_mana())
     dungeon_map.move_hero("right")
     print(h.get_mana())
 =======
+=======
+>>>>>>> 21ae5ac7b9e574a871e3c81e3f380d0a6f366af9
     # print()
 
 >>>>>>> finished decorators and some pretty messages

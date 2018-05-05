@@ -37,7 +37,7 @@ class Hero(Character):
                 self.equip(treasure.item)
         elif treasure.type == 'spell' and\
                 (self.spell is None or
-                    treasure.items > self.spell):
+                    treasure.item > self.spell):
             self.learn(treasure.item)
         elif treasure.type == 'mana potion':
             self.take_mana(treasure.item)
