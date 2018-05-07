@@ -13,9 +13,10 @@ def verify_types(*args, **kwargs):
             for position, arg in enumerate(args):
                 arguments[position] = arg
 
+
             for arg in types.keys():
-                if arg in kwargs.keys() and\
-                    type(arguments[arg]) is not types[arg] and\
+                if arg in arguments.keys() and\
+                    type(arguments[arg]) != types[arg] and\
                     not(isinstance(types[arg], Iterable) and
                         type(arguments[arg]) in types[arg]):
                     raise TypeError(
