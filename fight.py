@@ -17,7 +17,7 @@ class Fight:
             if not self.__hero.is_alive():
                 print("Hero is dead")
                 return False
-            self.conduct_fight()
+            return self.conduct_fight()
 
     def __choose_weapon_or_spell(self, character):
         by_weapon = character.attack("weapon")
