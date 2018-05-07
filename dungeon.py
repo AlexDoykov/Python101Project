@@ -217,8 +217,9 @@ class Dungeon:
                         self.__hero_y
                     )
                     return True
-
-        if direction == "left":
+            else:
+                print("Can't move hero in this direction!")
+        elif direction == "left":
             if self.__in_map(self.__hero_x, self.__hero_y - 1):
                 if self.__is_free(
                     self.__map[self.__hero_x][self.__hero_y - 1]
@@ -230,8 +231,9 @@ class Dungeon:
                         self.__hero_y
                     )
                     return True
-
-        if direction == "up":
+            else:
+                print("Can't move hero in this direction!")
+        elif direction == "up":
             if self.__in_map(self.__hero_x - 1, self.__hero_y):
                 if self.__is_free(
                     self.__map[self.__hero_x - 1][self.__hero_y]
@@ -243,8 +245,9 @@ class Dungeon:
                         self.__hero_y
                     )
                     return True
-
-        if direction == "down":
+            else:
+                print("Can't move hero in this direction!")
+        elif direction == "down":
             if self.__in_map(self.__hero_x + 1, self.__hero_y):
                 if self.__is_free(
                     self.__map[self.__hero_x + 1][self.__hero_y]
@@ -256,5 +259,6 @@ class Dungeon:
                         self.__hero_y
                     )
                     return True
-        print("Can't move hero in this direction!")
+            else:
+                print("Can't move hero in this direction!")
         return False
