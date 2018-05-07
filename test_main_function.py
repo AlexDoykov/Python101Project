@@ -5,7 +5,7 @@ from dungeon import Dungeon
 
 
 def main():
-
+    pass
 
 
 if __name__ == '__main__':
