@@ -134,10 +134,12 @@ class Dungeon:
 
     def __fight(self, by, dist_to_enemy):
         enemy = self.__choose_enemy()
+        print(f"A fight is started between our {self.__hero} and {enemy}")
         fight = Fight(self.__hero, enemy)
         result = fight.fight(by, dist_to_enemy)
         if result:
             self.__enemies = self.__enemies[1:]
+            print("Enemy is dead!")
         else:
             self.__place(
                 self.__hero.checkpoint_position[0],
@@ -146,6 +148,7 @@ class Dungeon:
                 self.__hero_y
             )
             self.__hero.regenerate()
+            print("Hero is dead!")
         return result
 
     # TODO
@@ -161,7 +164,7 @@ class Dungeon:
             self.__collect_treasure(self.__hero)
             return True
         if pos == 'E':
-            result = self.__fight(None)
+            result = self.__fight(None, 1)
             if not result:
                 self.__place(
                     self.__hero.checkpoint_position[0],

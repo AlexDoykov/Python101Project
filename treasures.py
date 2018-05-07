@@ -15,3 +15,7 @@ class Treasure:
         else:
             self.type += ' potion'
             self.item = value
+
+
+    def __repr__(self):
+        return f"{self.item}"
