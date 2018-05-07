@@ -45,8 +45,8 @@ def verify_positive(func):
 
 
 
-def verify_value(arg, *values):
-    if arg in values:
+def verify_value(arg, values):
+    if arg not in values:
         raise ValueError(f"{values} expected")
     else:
         return True

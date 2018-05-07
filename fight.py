@@ -6,7 +6,12 @@ class Fight:
 
     def conduct_fight(self, hero_attack, hero, enemy_attack, enemy, skip):
         self.__enemy.take_damage(hero_attack[0])
-        print(f"Hero casts a {hero_attack[1]}, hits enemy for {hero_attack[0]} dmg. Enemy health is {enemy.get_health()}")
+        print(hero_attack[1].__class__.__name__)
+        if hero_attack[1].__class__.__name__ == "Weapon":
+            attack_type = "attacks with"
+        else:
+            attack_type = "casts"
+        print(f"Hero {attack_type} {hero_attack[1]}, hits enemy for {hero_attack[0]} dmg. Enemy health is {enemy.get_health()}")
         if not self.__enemy.is_alive():
             return True
         if skip:

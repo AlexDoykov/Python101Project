@@ -1,3 +1,3 @@
-weapon Sword 50
+weapon sword 50
 health 10
 spell Lightning_bold 50

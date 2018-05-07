@@ -1,4 +1,4 @@
-from verify import verify_direction
+from verify import verify_direction, verify_value
 from enemy import Enemy
 from treasures import Treasure
 from fight import Fight
@@ -111,6 +111,7 @@ class Dungeon:
         self.__map[x][y] = 'E'
 
     def hero_attack(self, by):
+        verify_value(by, ['weapon', 'magic'])
         if by == 'magic':
             if self.__hero.spell is None:
                 print("You don't have spell to attack")
@@ -123,7 +124,7 @@ class Dungeon:
             range_to_cast = self.__hero.spell.cast_range
         position = self.__check_range(range_to_cast)
         if position is None:
-            print("Nothing in rage to attack!")
+            print("Nothing in range to attack!")
             return
         hero_x_before_fight = self.__hero_x
         hero_y_before_fight = self.__hero_y
@@ -151,13 +152,16 @@ class Dungeon:
             print("Hero is dead!")
         return result
 
-    # TODO
-    def __next_level(self):
-        pass
-
-    def __is_free(self, pos):
+    def __is_free(self, pos, start=False):
+        if start is True:
+            if pos == 'S':
+                return True
+            else:
+                return False
         if pos == 'S' or pos == '.':
             return True
+        if pos == 'G':
+            print("Congratulations! You won this level")
         if pos == '#':
             return False
         if pos == 'T':
@@ -183,7 +187,7 @@ class Dungeon:
         self.__hero = hero
         for row_index, row in enumerate(self.__map):
             for pos_index, pos in enumerate(row):
-                if self.__is_free(pos):
+                if self.__is_free(pos, start=True):
                     self.__place(row_index, pos_index, row_index, pos_index)
                     return True
         return False
@@ -201,46 +205,55 @@ class Dungeon:
     @verify_direction("left", "right", "up", "down")
     def move_hero(self, direction):
         if direction == "right":
-            if self.__is_free(self.__map[self.__hero_x][self.__hero_y + 1]):
-                self.__place(
-                    self.__hero_x,
-                    self.__hero_y + 1,
-                    self.__hero_x,
-                    self.__hero_y
-                )
-                self.__restore_mana()
-                return True
+            if self.__in_map(self.__hero_x, self.__hero_y + 1):
+                if self.__is_free(
+                    self.__map[self.__hero_x][self.__hero_y + 1]
+                ):
+                    self.__place(
+                        self.__hero_x,
+                        self.__hero_y + 1,
+                        self.__hero_x,
+                        self.__hero_y
+                    )
+                    return True
 
         if direction == "left":
-            if self.__is_free(self.__map[self.__hero_x][self.__hero_y - 1]):
-                self.__place(
-                    self.__hero_x,
-                    self.__hero_y - 1,
-                    self.__hero_x,
-                    self.__hero_y
-                )
-                self.__restore_mana()
-                return True
+            if self.__in_map(self.__hero_x, self.__hero_y - 1):
+                if self.__is_free(
+                    self.__map[self.__hero_x][self.__hero_y - 1]
+                ):
+                    self.__place(
+                        self.__hero_x,
+                        self.__hero_y - 1,
+                        self.__hero_x,
+                        self.__hero_y
+                    )
+                    return True
 
         if direction == "up":
-            if self.__is_free(self.__map[self.__hero_x - 1][self.__hero_y]):
-                self.__place(
-                    self.__hero_x - 1,
-                    self.__hero_y,
-                    self.__hero_x,
-                    self.__hero_y
-                )
-                self.__restore_mana()
-                return True
+            if self.__in_map(self.__hero_x - 1, self.__hero_y):
+                if self.__is_free(
+                    self.__map[self.__hero_x - 1][self.__hero_y]
+                ):
+                    self.__place(
+                        self.__hero_x - 1,
+                        self.__hero_y,
+                        self.__hero_x,
+                        self.__hero_y
+                    )
+                    return True
 
         if direction == "down":
-            if self.__is_free(self.__map[self.__hero_x + 1][self.__hero_y]):
-                self.__place(
-                    self.__hero_x + 1,
-                    self.__hero_y,
-                    self.__hero_x,
-                    self.__hero_y
-                )
-                self.__restore_mana()
-                return True
+            if self.__in_map(self.__hero_x + 1, self.__hero_y):
+                if self.__is_free(
+                    self.__map[self.__hero_x + 1][self.__hero_y]
+                ):
+                    self.__place(
+                        self.__hero_x + 1,
+                        self.__hero_y,
+                        self.__hero_x,
+                        self.__hero_y
+                    )
+                    return True
+        print("Can't move hero in this direction!")
         return False

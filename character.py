@@ -67,7 +67,7 @@ class Character:
         print("You learned a new spell", spell)
 
     def attack(self, by):
-        verify_value(by, ['weapon', 'magic'])
+        verify_value(by, ['weapon', 'magic', None])
         if by == 'weapon' and self.weapon is not None:
             return (self.weapon.damage, self.weapon)
         elif by == 'magic' and self.spell is not None and self.can_cast():
