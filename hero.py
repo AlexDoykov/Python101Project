@@ -27,6 +27,7 @@ class Hero(Character):
 
     def set_treasure(self, treasure):
         verify_class_type(treasure, Treasure)
+        print(treasure.type)
         if treasure.type == 'weapon' and\
                 (self.weapon is None or
                     treasure.item.damage > self.weapon.damage):
@@ -37,9 +38,13 @@ class Hero(Character):
             self.learn(treasure.item)
         elif treasure.type == 'mana':
             self.take_mana(treasure.item)
-        else:
+        elif treasure.type == 'health':
+            print(treasure.item)
             self.take_healing(treasure.item)
 
     def regenerate(self):
         self.mana = self.max_mana
         self.health = self.max_health
+
+    def __repr__(self):
+        return f"Hero(health={self.health}, mana={self.mana})"

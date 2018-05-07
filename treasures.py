@@ -14,3 +14,7 @@ class Treasure:
             self.item = Spell(name, value)
         else:
             self.item = value
+
+
+    def __repr__(self):
+        return f"{self.item}"
