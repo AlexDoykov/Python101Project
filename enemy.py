@@ -16,9 +16,8 @@ class Enemy(Character):
         self.damage = damage
 
     def attack(self, by):
-        if Character.attack(self, by) == 0:
-            return self.damage
+        if Character.attack(self, by) is None:
+            return (self.damage, "default damage")
 
-    def __str__(self):
-        return f"health {self.health}, \
-mana {self.mana}, damage {self.damage}"
+    def __repr__(self):
+        return f"Enemy(health={self.health}, mana={self.mana})"

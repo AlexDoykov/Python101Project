@@ -51,3 +51,6 @@ class Hero(Character):
     def __str__(self):
         return f"{self.known_as()}: health {self.health}, \
 mana {self.mana}"
+
+    def regenerate_mana(self):
+        Character.take_mana(self, self.mana_regeneration_rate)

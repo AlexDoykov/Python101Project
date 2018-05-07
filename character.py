@@ -19,7 +19,7 @@ class Character:
 
     def can_cast(self):
         if self.spell is not None:
-            return (self.mana - self.spell.mana_cost) > 0
+            return (self.mana - self.spell.mana_cost) >= 0
 
     def get_health(self):
         return self.health
@@ -59,7 +59,7 @@ class Character:
 
     def cast(self):
         self.mana -= self.spell.mana_cost
-        return self.spell.damage
+        return (self.spell.damage, self.spell)
 
     @verify_types(Spell)
     def learn(self, spell):
@@ -67,10 +67,10 @@ class Character:
         print("You learned a new spell", spell)
 
     def attack(self, by):
-        verify_value(by, ['weapon', 'magic'])
+        verify_value(by, ['weapon', 'magic', None])
         if by == 'weapon' and self.weapon is not None:
-            return self.weapon.damage
+            return (self.weapon.damage, self.weapon)
         elif by == 'magic' and self.spell is not None and self.can_cast():
             return self.cast()
         else:
-            return 0
+            return None

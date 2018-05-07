@@ -37,8 +37,7 @@ def start_game():
     print("Congratilations! You found a weapon and a spell.")
     w = Weapon(name="The Axe of Destiny", damage=20)
     h.equip(w)
-    s = Weapon(name="The Axe of Destiny", damage=20)
-
+    s = Spell(name="Fireball", damage=30, mana_cost=10, cast_range=3)
     h.learn(s)
     return h
 
