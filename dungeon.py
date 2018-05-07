@@ -65,6 +65,10 @@ class Dungeon:
             self.__enemies = self.__enemies[1:]
         return result
 
+    # TODO
+    def __next_level(self):
+        pass
+
     def __is_free(self, pos):
         if pos == 'S' or pos == '.':
             return True
@@ -86,6 +90,7 @@ class Dungeon:
             return result
         if pos == 'G':
             print("Level finished")
+            self.__next_level()
             return True
 
     def spawn(self, hero):

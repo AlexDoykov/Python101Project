@@ -9,7 +9,7 @@ class Weapon:
         self.damage = damage
 
     def __str__(self):
-        return f"{self.name}: damade {self.damage}"
+        return f"{self.name}: damage {self.damage}"
 
     def __gt__(self, other):
         return self.damage > other.damage
