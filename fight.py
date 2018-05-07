@@ -24,7 +24,9 @@ class Fight:
         return None
 
     def fight(self, default, dist_to_enemy):
+        print(default)
         hero_attack = self.__choose_weapon_or_spell(self.__hero, default)
+        print("Attack:", hero_attack)
         enemy_attack = self.__choose_weapon_or_spell(self.__enemy, default)
         if dist_to_enemy == 0:
             skip = False
@@ -49,11 +51,14 @@ class Fight:
             if by_default is not None:
                 return by_default
         by_weapon = character.attack("weapon")
-        if by_weapon is None:
-            by_spell = character.attack("magic")
-            if by_spell is None:
-                return 0
-            if character.can_cast and\
-                    by_weapon < by_spell:
-                return by_spell
-        return by_weapon
+        by_spell = character.attack("magic")
+        if by_weapon is None and by_spell is None:
+            return 0
+        if by_weapon is None and character.can_cast():
+            return by_spell
+        if by_spell is None:
+            return by_weapon
+        if by_weapon[0] < by_spell[0] and character.can_cast():
+            return by_spell
+        else:
+            return by_weapon
