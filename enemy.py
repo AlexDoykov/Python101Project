@@ -14,7 +14,7 @@ class Enemy(Character):
         self.damage = damage
 
     def attack(self, by):
-        if Character.attack(self, by) == None:
+        if Character.attack(self, by) is None:
             return (self.damage, "default damage")
 
     def __repr__(self):
