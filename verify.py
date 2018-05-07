@@ -40,8 +40,8 @@ def verify_class_type(arg, class_type):
         return True
 
 
-def verify_value(arg, *values):
-    if arg in values:
+def verify_value(arg, values):
+    if arg not in values:
         raise ValueError(f"{values} expected")
     else:
         return True

@@ -46,5 +46,8 @@ class Hero(Character):
         self.mana = self.max_mana
         self.health = self.max_health
 
+    def regenerate_mana(self):
+        Character.take_mana(self, self.mana_regeneration_rate)
+
     def __repr__(self):
         return f"Hero(health={self.health}, mana={self.mana})"
