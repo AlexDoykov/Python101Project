@@ -189,6 +189,7 @@ class Dungeon:
             for pos_index, pos in enumerate(row):
                 if self.__is_free(pos, start=True):
                     self.__place(row_index, pos_index, row_index, pos_index)
+                    self.__hero.checkpoint_position = (row_index, pos_index)
                     return True
         return False
 

@@ -24,9 +24,7 @@ class Fight:
         return None
 
     def fight(self, default, dist_to_enemy):
-        print(default)
         hero_attack = self.__choose_weapon_or_spell(self.__hero, default)
-        print("Attack:", hero_attack)
         enemy_attack = self.__choose_weapon_or_spell(self.__enemy, default)
         if dist_to_enemy == 0:
             skip = False
