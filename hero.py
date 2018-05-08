@@ -16,9 +16,6 @@ class Hero(Character):
             weapon=None,
             spell=None
         )
-        # verify_string(name)
-        # verify_string(title)
-        # verify_number(mana_regeneration_rate)
         self.name = name
         self.title = title
         self.mana_regeneration_rate = mana_regeneration_rate
@@ -50,7 +47,7 @@ class Hero(Character):
 
     def __str__(self):
         return f"{self.known_as()}: health {self.health}, \
-mana {self.mana}"
+mana {self.mana} \n" + str(self.weapon) + " \n" + str(self.spell)
 
     def regenerate_mana(self):
         Character.take_mana(self, self.mana_regeneration_rate)

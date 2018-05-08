@@ -12,6 +12,8 @@ class Dungeon:
         self.__map = self.__fill_map()
         self.__hero_x = 0
         self.__hero_y = 0
+        self.__hero_start_x = 0
+        self.__hero_start_y = 0
 
     def __read_file(self, file_name):
         with open(file_name) as file:
@@ -64,51 +66,76 @@ class Dungeon:
             return False
         return True
 
-    def __check_sell(self, x, y, dist_to_enemy):
+    def __check_sell(self, x, y, dist_to_enemy, blocked, direction):
         if self.__in_map(x, y):
             cell = self.__map[x][y]
-            if cell == 'E':
+            if cell == "#":
+                blocked.append(direction)
+            if cell == "E":
                 return (x, y, dist_to_enemy)
         return None
 
     def __check_range(self, range_to_check, current_range=1):
-        if range_to_check >= current_range:
-            result = self.__check_sell(
-                self.__hero_x + current_range,
-                self.__hero_y,
-                current_range
-            )
-            if result is not None:
-                return result
-            result = self.__check_sell(
-                self.__hero_x - current_range,
-                self.__hero_y,
-                current_range
-            )
-            if result is not None:
-                return result
-            result = self.__check_sell(
-                self.__hero_x,
-                self.__hero_y + current_range,
-                current_range
-            )
-            if result is not None:
-                return result
-            result = self.__check_sell(
-                self.__hero_x,
-                self.__hero_y - current_range,
-                current_range
-            )
-            if result is not None:
-                return result
-            return self.__check_range(range_to_check, current_range + 1)
-        return None
+        blocked = []
+        while range_to_check >= current_range:
+            if "down" not in blocked:
+                check_result = self.__check_sell(
+                    self.__hero_x + current_range,
+                    self.__hero_y,
+                    current_range,
+                    blocked,
+                    "down"
+                )
+                if check_result is not None:
+                    return check_result
+            if "up" not in blocked:
+                check_result = self.__check_sell(
+                    self.__hero_x - current_range,
+                    self.__hero_y,
+                    current_range,
+                    blocked,
+                    "up"
+                )
+                if check_result is not None:
+                    return check_result
+            if "right" not in blocked:
+                check_result = self.__check_sell(
+                    self.__hero_x,
+                    self.__hero_y + current_range,
+                    current_range,
+                    blocked,
+                    "right"
+                )
+                if check_result is not None:
+                    return check_result
+            if "left" not in blocked:
+                check_result = self.__check_sell(
+                    self.__hero_x,
+                    self.__hero_y - current_range,
+                    current_range,
+                    blocked,
+                    "left"
+                )
+                if check_result is not None:
+                    return check_result
+            current_range += 1
 
     def remove_enemy(self, position):
         self.__map[position[0]][position[1]] = '.'
 
     def place_enemy(self, x, y):
         self.__map[x][y] = 'E'
+
+    def __place_next_to_hero(self, hero_x, hero_y, enemy_x, enemy_y):
+        print(hero_x, hero_y, enemy_x, enemy_y)
+        if hero_x - enemy_x > 0:
+            return (hero_x - 1, hero_y)
+        if hero_x - enemy_x < 0:
+            return (hero_x + 1, hero_y)
+        if hero_y - enemy_y < 0:
+            return (hero_x, hero_y + 1)
+        if hero_y - enemy_y > 0:
+            return (hero_x, hero_y - 1)
 
     def hero_attack(self, by):
         verify_value(by, ['weapon', 'magic'])
@@ -121,8 +148,9 @@ class Dungeon:
             if self.__hero.weapon is None:
                 print("You don't have weapon to attack")
                 return
-            range_to_cast = self.__hero.spell.cast_range
+            range_to_cast = 1
         position = self.__check_range(range_to_cast)
+        print(position)
         if position is None:
             print("Nothing in range to attack!")
             return
@@ -131,7 +159,19 @@ class Dungeon:
         fight_result = self.__fight(by, position[2])
         self.remove_enemy(position)
         if not fight_result:
-            self.place_enemy(hero_x_before_fight, hero_y_before_fight)
+            print(self.__hero_x, self.__hero_y, self.__hero_start_x, self.__hero_start_y, hero_x_before_fight, hero_y_before_fight)
+            if hero_x_before_fight == self.__hero_start_x and\
+                    hero_y_before_fight == self.__hero_start_y:
+                enemy_x, enemy_y = self.__place_next_to_hero(
+                    hero_x_before_fight,
+                    hero_y_before_fight,
+                    position[0],
+                    position[1]
+                )
+            else:
+                enemy_x, enemy_y = hero_x_before_fight, hero_y_before_fight
+            print(position, enemy_x, enemy_y)
+            self.place_enemy(enemy_x, enemy_y)
 
     def __fight(self, by, dist_to_enemy):
         enemy = self.__choose_enemy()
@@ -177,6 +217,8 @@ class Dungeon:
                 if self.__is_free(pos, start=True):
                     self.__place(row_index, pos_index, row_index, pos_index)
                     self.__hero.checkpoint_position = (row_index, pos_index)
+                    self.__hero_start_x = row_index
+                    self.__hero_start_y = pos_index
                     return True
         return False
 
