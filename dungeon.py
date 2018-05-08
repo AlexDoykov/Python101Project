@@ -9,11 +9,12 @@ class Dungeon:
         self.__file_name = file_name
         self.__treasures = []
         self.__enemies = []
-        self.__map = self.__fill_map()
+        self.__map = self.__fill_map(file_name)
         self.__hero_x = 0
         self.__hero_y = 0
         self.__hero_start_x = 0
         self.__hero_start_y = 0
+        self.__level = 1
 
     def __read_file(self, file_name):
         with open(file_name) as file:
@@ -38,8 +39,8 @@ class Dungeon:
             enemies.append(Enemy(*enemy_splitted_data))
         return enemies
 
-    def __fill_map(self):
-        map_string = self.__read_file(self.__file_name)
+    def __fill_map(self, file_name):
+        map_string = self.__read_file(file_name)
         self.__fill_treasures_list()
         self.__enemies = self.__fill_enemies_list()
         return [list(row.replace('\n', '')) for row in map_string]
@@ -192,6 +193,11 @@ class Dungeon:
             print("Hero is dead!")
         return result
 
+    def __next_level(self):
+        self.__level += 1
+        self.__map = self.__fill_map("level" + str(self.__level) + ".txt")
+        self.spawn(self.__hero)
+
     def __is_free(self, pos, start=False):
         if start is True:
             if pos == 'S':
@@ -204,10 +210,6 @@ class Dungeon:
             return False
         if pos == 'T':
             self.__collect_treasure(self.__hero)
-            return True
-        if pos == 'G':
-            print("Level finished")
-            self.__next_level()
             return True
 
     def spawn(self, hero):
@@ -256,6 +258,10 @@ class Dungeon:
             if not self.__is_enemy(self.__map[x][y]):
                 # print("Can't move hero in this direction!")
                 return False
+            elif self.__map[x][y] == 'G':
+                    print("Level finished")
+                    self.__next_level()
+                    return False
             else:
                 return True
         elif not result:
