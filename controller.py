@@ -13,7 +13,6 @@ def menu():
     print("map - print map")
     print("check - create checkpoint")
     print("info - hero information")
-    print("attack <weapon or magic> - hero will attempt range attack with weapon or magic")
     print("===\n")
 
 

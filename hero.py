@@ -46,8 +46,13 @@ class Hero(Character):
         self.health = self.max_health
 
     def __str__(self):
-        return f"{self.known_as()}: health {self.health}, \
-mana {self.mana} \n" + str(self.weapon) + " \n" + str(self.spell)
+        str_hero = f"{self.known_as()}: health {self.health}, \
+mana {self.mana} \n"
+        if self.weapon is not None:
+            str_hero += str(self.weapon) + " \n" 
+        if self.spell is not None:
+            str_hero += str(self.spell) + "\n"
+        return str_hero
 
     def regenerate_mana(self):
         Character.take_mana(self, self.mana_regeneration_rate)
