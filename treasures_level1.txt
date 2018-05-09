@@ -1,3 +1,5 @@
-weapon sword 50
+weapon Axe 50
+weapon Feather 1
 health 10
-spell Lightning_bold 50
+spell Lightning 50
+spell WaterFall 10
